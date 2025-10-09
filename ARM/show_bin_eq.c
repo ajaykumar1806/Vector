@@ -17,11 +17,12 @@ int main() {
 		else {
 			delayMs(100);
 			num = (rand() % 255) + 1;
-			//IOCLR0 = (0xff << LED_AL_START);
-			//IOSET0 = (num << LED_AL_START);
+			//num = 1;
+			IOCLR0 = (0xff << LED_AL_START);
+			IOSET0 = (~num << LED_AL_START);
 			//IOPIN0 = ((IOPIN0 &~(0xff << LED_AL_START)) | (num << LED_AL_START)); 
 			//         ( IOPIN0 is used only for reading and writing into pins is not allowed)
-			IO0PIN = (IO0PIN & ~(0xFF << LED_AL_START)) | (num << LED_AL_START);
+			//IO0PIN = (IO0PIN & ~(0xFF << LED_AL_START)) | (~num << LED_AL_START);
 		}
 	}
 }
