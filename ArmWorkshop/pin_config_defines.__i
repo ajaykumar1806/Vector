@@ -1,0 +1,1 @@
+-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I "C:\KeilARM\ARM\INC" -I "C:\KeilARM\ARM\INC\Philips" -o "pin_config_defines.o" --omf_browse "pin_config_defines.crf" --depend "pin_config_defines.d" "pin_config_defines.c"

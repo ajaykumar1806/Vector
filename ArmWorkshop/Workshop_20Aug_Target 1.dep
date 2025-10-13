@@ -1,0 +1,7 @@
+Dependencies for Project 'Workshop_20Aug', Target 'Target 1': (DO NOT MODIFY !)
+F (.\Startup.s)(0x4BB1C206)()
+F (..\20_aug\pin _function_defines.h)(0x68A6E7CA)()
+F (..\20_aug\pin_connect_block.c)(0x68A6EDF2)()
+F (..\20_aug\pin_connect_block.h)(0x68A6EDFB)()
+F (..\20_aug\pin_connect_block_test.c)(0x68A6F11A)()
+F (..\types.h)(0x68A6ED17)()
