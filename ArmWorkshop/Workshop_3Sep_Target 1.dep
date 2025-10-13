@@ -1,4 +1,0 @@
-Dependencies for Project 'Workshop_3Sep', Target 'Target 1': (DO NOT MODIFY !)
-F (.\Startup.s)(0x4BB1C206)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -I "C:\KeilARM\ARM\INC" -I "C:\KeilARM\ARM\INC\Philips" --list "Startup.lst" --xref -o "Startup.o" --depend "Startup.d")
-F (..\..\Downloads\v24he11_ws.c)(0x68B81CC5)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I "C:\KeilARM\ARM\INC" -I "C:\KeilARM\ARM\INC\Philips" -o "v24he11_ws.o" --omf_browse "v24he11_ws.crf" --depend "v24he11_ws.d")
-I (C:\KeilARM\ARM\INC\Philips\LPC21XX.h)(0x4BB1C2C8)
