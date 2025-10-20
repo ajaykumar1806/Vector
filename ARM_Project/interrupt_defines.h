@@ -1,0 +1,6 @@
+#include "pin_function_defines.h"
+
+#define EINT0_VIC_CHNO 				15
+#define EINT0_0_1 						PIN_FUNC4
+#define EINT_REQUEST					4 //p0.4
+
