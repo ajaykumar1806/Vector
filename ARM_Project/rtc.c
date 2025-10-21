@@ -351,23 +351,12 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 }
 
 void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
-	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)
+	while(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)
 	{
-		IOSET0 = 1 << ALARM_STOP_SWAL;
-		*alarm_minutes++;
-	}	
-	if(READBIT(IOPIN0,ALARM_STOP_SWAL)) {
-		while(1) {
-			CmdLCD(CLEAR_LCD);
-			StrLCD("ALARM RINGING");
-			delay_ms(50);
-			if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
-				CmdLCD(CLEAR_LCD);
-				break;
-			}
-		}
+		CmdLCD(CLEAR_LCD);
+		StrLCD("ALARM RINGING");
+		delay_ms(50);
 	}
-	else return;
 }
 
 

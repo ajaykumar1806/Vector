@@ -16,22 +16,29 @@ void switches_configuration(void) {
 	IODIR0 |= 1 << ALARM_STOP_SWAL;
 }
 
+void eint1_isr(void)__irq {
+	IOCLR0 = 1 << EINT_REQUEST;
+	EXTINT = 1 << 1;
+  	VICVectAddr = 0;
+}
+
+
 void interrupt_configuration(void) {
-	CfgPortPinFunc(0,3,EINT0_0_1);
+	CfgPortPinFunc(0,3,EINT0_0_3);
 //	VICIntSelect = 0; //{default is always 0 and hence it acts for irq interrupt)
 	VICIntEnable = 1 << EINT0_VIC_CHNO;
 	VICVectCntl0 = 1 << 5 | EINT0_VIC_CHNO;
-	VICVectAddr0 = (u32)eint0_isr;
+	VICVectAddr0 = (u32)eint1_isr;
 //	VICVectAddr; //(Not required bcoz it will be internally done)
-	//EXTINT = 1 << 0; //(0 bcoz we are using EINT0)
-	//EXTMODE = 1 << 0;
-	//EXTPOLAR = 1 << 0;
+	EXTINT = 1 << 0; //(0 bcoz we are using EINT0)
+	EXTMODE = 1 << 0;
+	EXTPOLAR = 0 << 0;
 }
 
 void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 	s32 flag = 1;
 	u8 kpm_key;
-	if (READBIT(IOPIN0, EINT_REQUEST)) {
+	if (((IOPIN0 >> EINT_REQUEST) & 1) == 0) {
 		s8 *menu_options[] = {
 				"MENU          ",
 				"1.EDT_RTC_INF ",
@@ -89,7 +96,7 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 					break;
 				case '3':
 					if(index >= 2 && index <= 3) {
-						IOCLR0 = 1 << EINT_REQUEST;
+						IOSET0 = 1 << EINT_REQUEST;
 						flag = 0;
 					}
 					break;
@@ -102,8 +109,3 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 	else return;
 }
 
-void eint0_isr(void)__irq {
-	IOSET0 = 1 << EINT_REQUEST;
-	EXTINT = 1 << 0;
-  VICVectAddr = 0;
-}
