@@ -6,7 +6,7 @@
 #include "interrupt_defines.h"
 #include "kpm.h"
 
-s32 hour,min,sec,date,month,year,day,alarm_hour_set = 0,alarm_min_set = 0;
+s32 hour,min,sec,date,month,year,day,alarm_hour_set = -1,alarm_min_set = -1;
 
 // Main function
 int main()
@@ -22,8 +22,8 @@ int main()
 	interrupt_configuration();
 	
 	// Set the initial time (hours, minutes, seconds)
-	SetRTCTimeInfo(23,59,53);
-	SetRTCDateInfo(31,12,2025);
+	SetRTCTimeInfo(23,59,58);
+	SetRTCDateInfo(31,03,2025);
 	SetRTCDay(0);
 	
 	while (1) 

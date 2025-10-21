@@ -247,7 +247,7 @@ void edit_rtc_info(void) {
 						CmdLCD(CLEAR_LCD);
 						StrLCD("Enter DOM: ");
 						ReadNum(&num,&key);
-						if(num < 0 || (max_days_in_month(MONTH,YEAR))) {
+						if(num < 0 || num > (max_days_in_month(MONTH,YEAR))) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Invalid DOM");
 						}
