@@ -19,6 +19,7 @@
 
 void switches_configuration(void) {
 	IODIR0 |= 1 << EINT_REQUEST;
+	IOCLR0  = 1 << EINT_REQUEST;
 	IODIR0 |= 1 << ALARM_STOP_SWAL;
 	IOSET0  = 1 << ALARM_STOP_SWAL;
 	IODIR0 |= 1 << ALARM_START_SWAL;
@@ -27,7 +28,7 @@ void switches_configuration(void) {
 void eint1_isr(void)__irq {
 	IOSET0 = 1 << EINT_REQUEST;
 	EXTINT = 1 << 1;
-  VICVectAddr = 0;
+ VICVectAddr = 0;
 }
 
 
@@ -38,9 +39,9 @@ void interrupt_configuration(void) {
 	VICVectCntl0 = 1 << 5 | EINT0_VIC_CHNO;
 	VICVectAddr0 = (u32)eint1_isr;
 //	VICVectAddr; //(Not required bcoz it will be internally done)
-	EXTINT = 1 << 0; //(0 bcoz we are using EINT0)
-	EXTMODE = 1 << 0;
-	EXTPOLAR = 0 << 0;
+//	EXTINT = 1 << 0; //(0 bcoz we are using EINT0)
+//	EXTMODE = 1 << 0;
+//	EXTPOLAR = 0 << 0;
 }
 
 void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {

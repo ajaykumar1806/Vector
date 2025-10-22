@@ -1,5 +1,5 @@
-#define ROWs_4 16
-#define COLs_4 20
+#define ROWs_4 16	//p1.16
+#define COLs_4 20	//p1.20
 
 #define ROW0   16
 #define ROW1   17

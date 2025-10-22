@@ -348,6 +348,7 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 					StrLCD("          ");
 				}
 	CmdLCD(DSP_ON_CUR_OFF);
+	IOSET0 = 1 << ALARM_STOP_SWAL;
 }
 
 void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
@@ -363,6 +364,9 @@ void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes)
 //		while(flag) {
 //			BuildCGRAM(alarm_symbol,8);
 //		}
+	}
+	else {
+		IOCLR0 = 1 << ALARM_START_SWAL;
 	}
 }
 
