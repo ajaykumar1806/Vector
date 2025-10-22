@@ -11,15 +11,23 @@
 #include "rtc.h"
 #include "rtc_defines.h"
 
+
+//u8 custom_symbols[][8] = {
+//	{0x04,0x0E,0x15,0x04,0x04,0x04,0x04,0x04},
+//	{0x04,0x04,0x04,0x04,0x04,0x15,0x0E,0x04}
+//};
+
 void switches_configuration(void) {
 	IODIR0 |= 1 << EINT_REQUEST;
 	IODIR0 |= 1 << ALARM_STOP_SWAL;
+	IOSET0  = 1 << ALARM_STOP_SWAL;
+	IODIR0 |= 1 << ALARM_START_SWAL;
 }
 
 void eint1_isr(void)__irq {
-	IOCLR0 = 1 << EINT_REQUEST;
+	IOSET0 = 1 << EINT_REQUEST;
 	EXTINT = 1 << 1;
-  	VICVectAddr = 0;
+  VICVectAddr = 0;
 }
 
 
@@ -38,12 +46,12 @@ void interrupt_configuration(void) {
 void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 	s32 flag = 1;
 	u8 kpm_key;
-	if (((IOPIN0 >> EINT_REQUEST) & 1) == 0) {
+	if (((IOPIN0 >> EINT_REQUEST) & 1)) {
 		s8 *menu_options[] = {
-				"MENU          ",
-				"1.EDT_RTC_INF ",
-				"2.SET_ALM_TM  ",
-				"3.EXIT        "
+				"MENU           ",
+				"1.EDT_RTC_INF  ",
+				"2.SET_ALM_TM   ",
+				"3.EXIT         "
 		};
 		s32 index = 0;
 		CmdLCD(CLEAR_LCD);
@@ -52,6 +60,7 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 				StrLCD(menu_options[index++]);
 				CmdLCD(GOTO_LINE2_POS0);
 				StrLCD(menu_options[index]);
+				//BuildCGRAM(custom_symbols[0],8);
 			}
 
 			kpm_key = KeyScan();
@@ -62,6 +71,7 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 					while(kpm_key == '+') {
 						index = 2;
 						StrLCD(menu_options[index++]);
+						//BuildCGRAM(custom_symbols[1],8);
 						CmdLCD(GOTO_LINE2_POS0);
 						StrLCD(menu_options[index]);
 						kpm_key = KeyScan();
@@ -77,6 +87,7 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 						StrLCD(menu_options[index++]);
 						CmdLCD(GOTO_LINE2_POS0);
 						StrLCD(menu_options[index]);
+						//BuildCGRAM(custom_symbols[0],8);
 						kpm_key = KeyScan();
 						goto loop;
 					}
@@ -96,7 +107,7 @@ void menu_display(s32 *alarm_hour_set,s32 *alarm_min_set) {
 					break;
 				case '3':
 					if(index >= 2 && index <= 3) {
-						IOSET0 = 1 << EINT_REQUEST;
+						IOCLR0 = 1 << EINT_REQUEST;
 						flag = 0;
 					}
 					break;

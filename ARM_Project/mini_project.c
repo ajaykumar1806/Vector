@@ -22,7 +22,7 @@ int main()
 	interrupt_configuration();
 	
 	// Set the initial time (hours, minutes, seconds)
-	SetRTCTimeInfo(14,47,00);
+	SetRTCTimeInfo(14,47,50);
 	SetRTCDateInfo(21,10,2025);
 	SetRTCDay(2);
 	

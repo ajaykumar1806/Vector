@@ -192,7 +192,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Hour Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 
 					case '2':  // Minute
@@ -208,7 +208,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Min Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 
 					case '3':  // Second
@@ -224,7 +224,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Sec Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 
 					case '4':
@@ -240,7 +240,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("DOW Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 							
 						case '5':
@@ -256,7 +256,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("DOM Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 						
 						case '6':
@@ -272,7 +272,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Month Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 							
 						case '7':
@@ -288,7 +288,7 @@ void edit_rtc_info(void) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Year Saved");
 						}
-						delay_ms(100);
+						delay_ms(500);
 						break;
 						
 						case '8':
@@ -309,7 +309,7 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 				if (hr < 0 || hr > 23) {
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("Invalid Hour");
-					delay_ms(100);
+					delay_ms(500);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("            ");
 					goto loop1;
@@ -321,7 +321,7 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 					U32LCD(hr);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("Hour Saved");
-					delay_ms(100);
+					delay_ms(500);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("          ");
 				}
@@ -331,7 +331,7 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 				if (min < 0 || min > 59) {
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("Invalid Minutes");
-					delay_ms(100);
+					delay_ms(500);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("               ");
 					goto loop2;
@@ -343,7 +343,7 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 					U32LCD(min);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("Minutes Saved");
-					delay_ms(100);
+					delay_ms(500);
 					CmdLCD(GOTO_LINE2_POS0);
 					StrLCD("          ");
 				}
@@ -351,11 +351,18 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 }
 
 void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
-	while(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)
-	{
-		CmdLCD(CLEAR_LCD);
-		StrLCD("ALARM RINGING");
-		delay_ms(50);
+//	u8 alarm_symbol[8] = {0x04,0x0E,0x0E,0x0E,0x1F,0x04,0x00,0x04};
+	u32 flag = 1;
+	if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
+		flag = 0;
+		IOCLR0 = 1 << ALARM_START_SWAL;
+	}
+	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes && flag) {
+		IOSET0 = 1 << ALARM_START_SWAL;
+//		CmdLCD(CLEAR_LCD);
+//		while(flag) {
+//			BuildCGRAM(alarm_symbol,8);
+//		}
 	}
 }
 

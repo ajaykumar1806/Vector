@@ -21,14 +21,14 @@
 #define GOTO_CGRAM_START     0x40 
 
 //lpc2129 port pin connection to lcd
-//#define LCD_DATA        8//@p0.8(d0) to p0.15(d7)
-//#define LCD_RS         16//@p0.16
-//#define LCD_RW         18//@p0.18
-//#define LCD_EN         17//@p0.17 
+#define LCD_DATA        8//@p0.8(d0) to p0.15(d7)
+#define LCD_RS         16//@p0.16
+#define LCD_RW         18//@p0.18
+#define LCD_EN         17//@p0.17 
 
  
-#define LCD_DATA        16//@p0.16(d0) to p0.23(d7)
-#define LCD_RS         28//@p0.28
-#define LCD_EN         29//@p0.29
-#define LCD_RW         30//@p0.30 
+//#define LCD_DATA        16//@p0.16(d0) to p0.23(d7)
+//#define LCD_RS         28//@p0.28
+//#define LCD_EN         29//@p0.29
+//#define LCD_RW         30//@p0.30 
 

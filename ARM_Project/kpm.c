@@ -52,24 +52,32 @@ u32 KeyScan(void) {
     return keyV;
 }
 
-void ReadNum(s32 *num,u8 *key)
+void ReadNum(s32 *num, u8 *key)
 {
-	*num=0;
-	while(1)
-	{
-		*key=KeyScan();
-		if(*key>='0' && *key<='9')
-		{
-			*num=(*num*10)+(*key-48);
-			CmdLCD(GOTO_LINE2_POS0);
-			U32LCD(*num);
-			while(ColScan()==0);
-    }
-    else break;		   		
+	*num = 0;
+	while (1) {
+		*key = KeyScan();
+		loop: if(*key >= '0' && *key <= '9') {
+						*num = (*num * 10) + (*key - '0');
+						CmdLCD(GOTO_LINE2_POS0);
+						U32LCD(*num);
+						while (ColScan() == 0);
+				  }
+					else if(*key == 'X') {
+						while(*key == 'X') {
+							*num = *num / 10;
+							CmdLCD(GOTO_LINE2_POS0);
+							StrLCD("                ");
+							CmdLCD(GOTO_LINE2_POS0);
+							U32LCD(*num);
+							while (ColScan() == 0);
+							*key = KeyScan();
+							if(*key != 'X') goto loop;
+						}
+					}
+					else
+					{
+						break;
+					}
 	}
 }
-
-
-
-
-
