@@ -7,7 +7,7 @@
 ".\mini_project.o"
 ".\pin_connect_block.o"
 ".\rtc.o"
---strict --scatter ".\ARM_Project.sct"
+--strict --scatter ".\mini_project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
---list ".\ARM_Project.map" -o .\ARM_Project.axf
+--list ".\mini_project.map" -o .\mini_project.axf

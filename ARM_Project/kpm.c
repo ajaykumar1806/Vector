@@ -54,10 +54,11 @@ u32 KeyScan(void) {
 
 void ReadNum(s32 *num, u8 *key)
 {
-	*num = 0;
+	*num = -1;
 	while (1) {
 		*key = KeyScan();
 		loop: if(*key >= '0' && *key <= '9') {
+						if(*num == -1) *num = 0;
 						*num = (*num * 10) + (*key - '0');
 						CmdLCD(GOTO_LINE2_POS0);
 						U32LCD(*num);
@@ -75,7 +76,7 @@ void ReadNum(s32 *num, u8 *key)
 							if(*key != 'X') goto loop;
 						}
 					}
-					else
+					else if(*key == '=')
 					{
 						break;
 					}
