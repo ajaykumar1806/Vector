@@ -352,18 +352,22 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 }
 
 void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
-//	u8 alarm_symbol[8] = {0x04,0x0E,0x0E,0x0E,0x1F,0x04,0x00,0x04};
-	u32 flag = 1;
+	u32 flag = 1,count = 1;
 	if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
 		flag = 0;
 		IOCLR0 = 1 << ALARM_START_SWAL;
 	}
 	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes && flag) {
 		IOSET0 = 1 << ALARM_START_SWAL;
-//		CmdLCD(CLEAR_LCD);
-//		while(flag) {
-//			BuildCGRAM(alarm_symbol,8);
-//		}
+		if (count == 1) CmdLCD(CLEAR_LCD);
+		while(READBIT(IOPIN0,ALARM_STOP_SWAL) && (rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)) {
+			CmdLCD(GOTO_LINE1_POS0);
+			StrLCD(" ");
+			WriteLCD(2);
+			rtc_hour = HOUR;
+			rtc_minutes = MIN;
+		}
+		count++;
 	}
 	else {
 		IOCLR0 = 1 << ALARM_START_SWAL;

@@ -15,6 +15,7 @@ int main()
 	Init_RTC();
 	// Initialize the LCD
 	Init_LCD();
+	CGRAM_Symbols();
 	//Initialize the KPM
 	Init_KPM();
 	// Initialize the Interrupt
@@ -22,7 +23,7 @@ int main()
 	interrupt_configuration();
 	
 	// Set the initial time (hours, minutes, seconds)
-	SetRTCTimeInfo(16,13,00);
+	SetRTCTimeInfo(16,13,50);
 	SetRTCDateInfo(22,10,2025);
 	SetRTCDay(3);
 	

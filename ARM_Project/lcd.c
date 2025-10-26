@@ -114,11 +114,11 @@ void F32LCD(f32 fnum,u32 nDP)
 	}
 }
 
-void BuildCGRAM(u8 *p,u8 nBytes)
+void BuildCGRAM(u8 *p,u8 nBytes,u32 cgram_pos)
 {
 	u32 i;
 	//point to cgram start
-	CmdLCD(GOTO_CGRAM_START);
+	CmdLCD(GOTO_CGRAM_START+cgram_pos);
 	//select data reg
 	IOSET0=1<<LCD_RS;
 	
@@ -127,8 +127,16 @@ void BuildCGRAM(u8 *p,u8 nBytes)
 		//write to cgram vi data reg
 		WriteLCD(p[i]);
 	}
-	//point back to ddram start/display
-	CmdLCD(GOTO_LINE1_POS0);
+}
+
+void CGRAM_Symbols() {
+	u8 up_arrow[] = {0x04,0x0E,0x15,0x04,0x04,0x04,0x04,0x04};
+	u8 down_arrow[] = {0x04,0x04,0x04,0x04,0x04,0x15,0x0E,0x04};
+	u8 alarm_symbol[] = {0x04,0x0E,0x0E,0x0E,0x1F,0x00,0x04,0x00};
+	
+	BuildCGRAM(up_arrow,8,0);
+	BuildCGRAM(down_arrow,8,8);
+	BuildCGRAM(alarm_symbol,8,16);
 }
 
 void StrOppCaseLCD(s8 *str) {
