@@ -1,8 +1,13 @@
-#include <Lpc21xx.h>
+#include "rtc_defines.h"
+#ifndef _LPC2148_
+#include <lpc21xx.h>
+#else
+#include <lpc214x.h>
+#endif
+
 #include "types.h" 
 #include "delay.h"
 #include "defines.h"
-#include "rtc_defines.h"
 #include "lcd_defines.h"
 #include "lcd.h"
 #include "kpm.h"
@@ -24,7 +29,7 @@ void Init_RTC(void)
   PREINT = PREINT_VAL;
 	PREFRAC = PREFRAC_VAL;
   // Enable the RTC
-	CCR = RTC_ENABLE; 
+	CCR = RTC_ENABLE | CLKSRC_VAL; 
 }
 
 /*
@@ -351,27 +356,37 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 	IOSET0 = 1 << ALARM_STOP_SWAL;
 }
 
-void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
-	u32 flag = 1,count = 1;
-	if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
-		flag = 0;
-		IOCLR0 = 1 << ALARM_START_SWAL;
+//void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
+//	u32 flag = 1,count = 1;
+//	if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
+//		flag = 0;
+//		IOCLR0 = 1 << ALARM_START_SWAL;
+//	}
+//	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes && flag) {
+//		IOSET0 = 1 << ALARM_START_SWAL;
+//		if (count == 1) CmdLCD(CLEAR_LCD);
+//		while(READBIT(IOPIN0,ALARM_STOP_SWAL) && (rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)) {
+//			CmdLCD(GOTO_LINE1_POS0);
+//			StrLCD(" ");
+//			WriteLCD(2);
+//			rtc_hour = HOUR;
+//			rtc_minutes = MIN;
+//		}
+//		count++;
+//	}
+//	else {
+//		IOCLR0 = 1 << ALARM_START_SWAL;
+//	}
+//}
+
+void ring_alarm(s32 alarm_hour,s32 alarm_min) {
+	IOSET0 = 1 << ALARM_START_SWAL;
+	CmdLCD(CLEAR_LCD);
+	CmdLCD(GOTO_LINE1_POS0);
+	StrLCD(" ");
+	WriteLCD(2);
+	while(MIN == alarm_min) {
+		if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) break;
 	}
-	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes && flag) {
-		IOSET0 = 1 << ALARM_START_SWAL;
-		if (count == 1) CmdLCD(CLEAR_LCD);
-		while(READBIT(IOPIN0,ALARM_STOP_SWAL) && (rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)) {
-			CmdLCD(GOTO_LINE1_POS0);
-			StrLCD(" ");
-			WriteLCD(2);
-			rtc_hour = HOUR;
-			rtc_minutes = MIN;
-		}
-		count++;
-	}
-	else {
-		IOCLR0 = 1 << ALARM_START_SWAL;
-	}
+	IOCLR0 = 1 << ALARM_START_SWAL;
 }
-
-

@@ -33,4 +33,4 @@ void GetDay(void);
 void edit_rtc_info(void);
 void set_alarm_time(s32 *hour,s32 *minutes);
 int max_days_in_month(u32 month,u32 year);
-void ring_alarm(s32 *,s32 *,s32,s32);
+void ring_alarm(s32,s32);

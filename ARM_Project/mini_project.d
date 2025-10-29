@@ -11,3 +11,7 @@
 .\mini_project.o: pin_function_defines.h
 .\mini_project.o: kpm.h
 .\mini_project.o: types.h
+.\mini_project.o: adc.h
+.\mini_project.o: types.h
+.\mini_project.o: defines.h
+.\mini_project.o: rtc_defines.h

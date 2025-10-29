@@ -1,5 +1,6 @@
 .\lcd.o: lcd.c
-.\lcd.o: C:\Keil\ARM\Inc\Philips\LPC21xx.h
+.\lcd.o: rtc_defines.h
+.\lcd.o: C:\Keil\ARM\Inc\Philips\lpc21xx.h
 .\lcd.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
 .\lcd.o: types.h
 .\lcd.o: defines.h

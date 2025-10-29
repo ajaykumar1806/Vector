@@ -3,40 +3,30 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Ajay Kumar\Desktop\Ajay\Vector-main\Vector-main\ARM_Project\ARM_Project.uvproj
-Project File Date:  10/26/2025
+C:\Users\Ajay Kumar\Desktop\Ajay\ARM_Project\ARM_Project.uvproj
+Project File Date:  10/29/2025
 
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling mini_project.c...
 linking...
-Program Size: Code=8676 RO-data=96 RW-data=96 ZI-data=1256  
+Program Size: Code=9592 RO-data=96 RW-data=108 ZI-data=1260  
 FromELF: creating hex file...
 ".\ARM_Project.axf" - 0 Error(s), 0 Warning(s).
 </pre>
 </body>
 </html>
-tly
-          s32 rtc_minutes = ReadRTC_Minute();
-rtc.c: 2 warnings, 0 errors
-linking...
-.\ARM_Project.axf: Error: L6218E: Undefined symbol ReadRTC_Hour (referred from rtc.o).
-.\ARM_Project.axf: Error: L6218E: Undefined symbol ReadRTC_Minute (referred from rtc.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 2 error messages.
-".\ARM_Project.axf" - 2 Error(s), 2 Warning(s).
+ng(s).
 Target not created
-        u8 *custom_symbols[] = {up_arrow,down_arrow,alarm_symbol};
-lcd.c(136): error:  #28: expression must have a constant value
-        u8 *custom_symbols[] = {up_arrow,down_arrow,alarm_symbol};
-lcd.c: 1 warning, 3 errors
-compiling mini_project.c...
-lcd.h(12): warning:  #1295-D: Deprecated declaration CGRAM_Symbols - give arg types
-  void CGRAM_Symbols();
-mini_project.c: 1 warning, 0 errors
-compiling rtc.c...
-lcd.h(12): warning:  #1295-D: Deprecated declaration CGRAM_Symbols - give arg types
-  void CGRAM_Symbols();
-rtc.c: 1 warning, 0 errors
-".\ARM_Project.axf" - 3 Error(s), 5 Warning(s).
+arning(s).
+ *"
+                alarm_min =(s32) MIN;
+rtc.c(390): error:  #42: operand types are incompatible ("unsigned char" and "s32 *")
+                if(READBIT(IOPIN0,ALARM_STOP_SWAL) || !(HOUR == alarm_hour && MIN == alarm_min)) {
+rtc.c(390): error:  #42: operand types are incompatible ("unsigned char" and "s32 *")
+                if(READBIT(IOPIN0,ALARM_STOP_SWAL) || !(HOUR == alarm_hour && MIN == alarm_min)) {
+rtc.c: 0 warnings, 4 errors
+".\ARM_Project.axf" - 4 Error(s), 0 Warning(s).
+Target not created
+RM_Project.axf" - 4 Error(s), 0 Warning(s).
 Target not created

@@ -1,5 +1,11 @@
 //lcd.c
-#include <LPC21xx.h>
+#include "rtc_defines.h"
+#ifndef _LPC2148_
+#include <lpc21xx.h>
+#else
+#include <lpc214x.h>
+#endif
+
 #include <string.h>
 #include "types.h"
 #include "defines.h"
@@ -137,6 +143,13 @@ void CGRAM_Symbols() {
 	BuildCGRAM(up_arrow,8,0);
 	BuildCGRAM(down_arrow,8,8);
 	BuildCGRAM(alarm_symbol,8,16);
+}
+
+void Display_temperature(u32 temperature) {
+	CharLCD(' ');
+	U32LCD(temperature);
+	WriteLCD(0xEB);
+	CharLCD('C');
 }
 
 void StrOppCaseLCD(s8 *str) {
