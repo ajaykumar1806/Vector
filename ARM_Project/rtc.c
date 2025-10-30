@@ -15,7 +15,7 @@
 
 // Array to hold names of days of the week
 s8 week[][4] = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
-
+extern s32 alarm_stop;
 /*
 Initialize the Real-Time Clock (RTC)
 This function disables the RTC, sets the prescaler values, 
@@ -236,7 +236,7 @@ void edit_rtc_info(void) {
 						CmdLCD(CLEAR_LCD);
 						StrLCD("Enter DOW: ");
 						ReadNum(&num,&key);
-						if(num < 0 || num > 7) {
+						if(num < 0 || num > 6) {
 							CmdLCD(GOTO_LINE2_POS0);
 							StrLCD("Invalid DOW");
 						}
@@ -356,37 +356,18 @@ void set_alarm_time(s32 *hour,s32 *minutes) {
 	IOSET0 = 1 << ALARM_STOP_SWAL;
 }
 
-//void ring_alarm(s32 *alarm_hour,s32 *alarm_minutes,s32 rtc_hour,s32 rtc_minutes) {
-//	u32 flag = 1,count = 1;
-//	if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
-//		flag = 0;
-//		IOCLR0 = 1 << ALARM_START_SWAL;
-//	}
-//	if(rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes && flag) {
-//		IOSET0 = 1 << ALARM_START_SWAL;
-//		if (count == 1) CmdLCD(CLEAR_LCD);
-//		while(READBIT(IOPIN0,ALARM_STOP_SWAL) && (rtc_hour == *alarm_hour && rtc_minutes == *alarm_minutes)) {
-//			CmdLCD(GOTO_LINE1_POS0);
-//			StrLCD(" ");
-//			WriteLCD(2);
-//			rtc_hour = HOUR;
-//			rtc_minutes = MIN;
-//		}
-//		count++;
-//	}
-//	else {
-//		IOCLR0 = 1 << ALARM_START_SWAL;
-//	}
-//}
-
 void ring_alarm(s32 alarm_hour,s32 alarm_min) {
-	IOSET0 = 1 << ALARM_START_SWAL;
+	IODIR0 |= 1 << ALARM_START_PIN;
+	IOSET0  = 1 << ALARM_START_PIN;
 	CmdLCD(CLEAR_LCD);
 	CmdLCD(GOTO_LINE1_POS0);
 	StrLCD(" ");
 	WriteLCD(2);
 	while(MIN == alarm_min) {
-		if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) break;
+		if(READBIT(IOPIN0,ALARM_STOP_SWAL) == 0) {
+			alarm_stop = 1;
+			break;
+		}
 	}
-	IOCLR0 = 1 << ALARM_START_SWAL;
+	IOCLR0  = 1 << ALARM_START_PIN;
 }

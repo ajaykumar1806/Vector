@@ -22,7 +22,7 @@
 #define RTC_ENABLE (1<<0) 
 #define RTC_RESET  (1<<1)
 
-#define ALARM_START_SWAL 5
+#define ALARM_START_PIN  5
 #define ALARM_STOP_SWAL  6
 
 #endif

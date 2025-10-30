@@ -431,11 +431,6 @@
               <FilePath>.\lcd.c</FilePath>
             </File>
             <File>
-              <FileName>mini_project.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\mini_project.c</FilePath>
-            </File>
-            <File>
               <FileName>pin_connect_block.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\pin_connect_block.c</FilePath>
@@ -449,6 +444,11 @@
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>mini_project.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mini_project.c</FilePath>
             </File>
           </Files>
         </Group>

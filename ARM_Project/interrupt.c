@@ -12,25 +12,18 @@
 #include "rtc_defines.h"
 
 s8 *menu_options[] = {
-		"MENU           ",
+		" ****MENU****  ",
 		"1.EDT_RTC_INF  ",
 		"2.SET_ALM_TM   ",
 		"3.EXIT         "
 };
 
-void switches_configuration(void) {
-	IODIR0 |= 1 << EINT_REQUEST;
-	IOCLR0  = 1 << EINT_REQUEST;
-	IODIR0 |= 1 << ALARM_STOP_SWAL;
-	IOSET0  = 1 << ALARM_STOP_SWAL;
-	IODIR0 |= 1 << ALARM_START_SWAL;
-	IOCLR0  = 1 << ALARM_START_SWAL;
-}
+extern s32 eint_request;
 
 void eint1_isr(void)__irq {
-	IOSET0 = 1 << EINT_REQUEST;
+	eint_request = 1;
 	EXTINT = 1 << 1;
-  VICVectAddr = 0;
+	VICVectAddr = 0;
 }
 
 
@@ -104,7 +97,7 @@ void menu_display(s32 *alarm_hour,s32 *alarm_min) {
 				break;
 			case '3':
 				if(index >= 2 && index <= 3) {
-					IOCLR0 = 1 << EINT_REQUEST;
+					eint_request = 0;
 					flag = 0;
 				}
 				break;

@@ -10,6 +10,7 @@
 #include "rtc_defines.h"
 
 s32 hour,min,sec,date,month,year,day,alarm_hour = -1,alarm_min = -1;
+s32 eint_request,alarm_stop;
 u32 temperature,chno = 0; //default is also 0
 f32 eAR;
 // Main function
@@ -25,13 +26,12 @@ int main()
 	//Initialize ADC
 	Init_ADC();
 	// Initialize the Interrupt
-	switches_configuration();
 	interrupt_configuration();
 	
 	// Set the initial time (hours, minutes, seconds)
-	SetRTCTimeInfo(16,14,50);
-	SetRTCDateInfo(22,10,2025);
-	SetRTCDay(3);
+	SetRTCTimeInfo(14,50,50);
+	SetRTCDateInfo(30,10,2025);
+	SetRTCDay(4);
 	
 	while (1) 
 	{
@@ -47,10 +47,10 @@ int main()
 		DisplayRTCDate(date,month,year);
 		Read_ADC(chno,&temperature,&eAR);
 		Display_temperature(temperature);
-		if (((IOPIN0 >> EINT_REQUEST) & 1)) {
+		if(eint_request) {
 			menu_display(&alarm_hour,&alarm_min);
 		}
-		if(HOUR == alarm_hour && MIN == alarm_min && READBIT(IOPIN0,ALARM_STOP_SWAL)) {
+		if(HOUR == alarm_hour && MIN == alarm_min && alarm_stop == 0) {
 			ring_alarm(alarm_hour,alarm_min);
 		}
 	}
